@@ -20,7 +20,7 @@ To build the Docker image and run a container using the image, follow these step
 4. Open a terminal or command prompt.
 5. Build the Docker image using the following command:
 6. Once the image is built successfully, run a container using the following command:
-7. Open a web browser and navigate to `http://localhost:8080` to access the application running inside the Docker container.
+7. Open a web browser and navigate to `https://hub.docker.com/repositories/linadoc20` to access the application running inside the Docker container.
 
 ## Assumptions and Decisions
 
