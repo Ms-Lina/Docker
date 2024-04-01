@@ -1,20 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Management App</title>
-    <link rel="stylesheet" href="web.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Project Management App</h1>
-        <div id="task-list">
-            <!-- Tasks will be dynamically added here -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-300">
+    <h1 class="bg-slate-600 font-bold p-2 text-2xl text-white">TASK MANAGER APP</h1>
+    <div class="flex flex-wrap gap-2 w-1/3 max-md:w-full m-auto mt-20">
+      <div class="bg-white w-full p-3 rounded-md">
+        <h2 class="p-2 text-slate-700 text-2xl font-bold">Frame List</h2>
+        <input
+          class="w-full outline-none bg-slate-300 p-3 mt-2 mb-2"
+          type="text"
+          id="todoName"
+          placeholder="Enter Task to be done"
+        />
+        <button
+        onclick="addTodo()"
+          id="addTodo"
+          class="bg-slate-600 text-white w-half p-2 rounded-md"
+        >
+          Add Task
+        </button>
+      </div>
+      <div class="bg-white w-full rounded-md">
+        <div class="columns-3 p-2 bg-slate-600">
+          <p class="text-white font-bold">Task Name</p>
+          <p class="text-white font-bold">Task Status</p>
+          <p class="text-white font-bold">Actions</p>
         </div>
-        <input type="text" id="new-task" placeholder="Enter a new task">
-        <button onclick="addTask()">Add Task</button>
+        <div id="todos"></div>
+      </div>
     </div>
-    <script src="web.js"></script>
-</body>
+    <script>
+const todosContainer = document.querySelector("#todos");
+let todos = [];
+
+function display(data) {
+    todosContainer.innerHTML = ""; 
+    data.forEach((todo, index) => {
+        todosContainer.innerHTML += `
+        <div class="columns-3 p-2 bg-slate-200">
+                <p class="text-gray-500 font-bold">${todo.name}</p>
+                <p class="text-gray-500 font-bold">${
+            todo.status ? "Completed" : "Not Done"
+        }</p>
+                <div class="text-gray-500 font-bold flex gap-2 justify-end">
+                    <button class="bg-red-600 text-white  p-1 text-xs rounded-md" onclick="deleteTodo(${
+                        todo.id
+                    })">Delete</button>
+                    <button class="bg-green-600 text-white  p-1 text-xs rounded-md" onclick="editTodo(${
+                        todo.id
+                    })">Done</button>
+                  </div>
+            </div>
+        `;
+    });
+}
+
+function deleteTodo(id) {
+    todos = todos.filter((todo) => todo.id !== id);
+    display(todos); // Update the display with the new data
+}
+
+function editTodo(id) {
+    // Find the todo with the given id
+    const todoToUpdate = todos.find((todo) => todo.id === id);
+    
+    // Update the status to true
+    if (todoToUpdate) {
+        todoToUpdate.status = !todoToUpdate.status;
+    }
+    
+    // Display the updated todos
+    display(todos);
+}
+function addTodo() {
+  const todo = document.querySelector('#todoName').value;
+  if(todo !==""){
+
+    todos.push({id: todos.length+1, name: todo,status:false});
+    document.querySelector('#todoName').value=""
+    display(todos);
+  }else{
+    alert("Enter Todo Name")
+  }
+}
+
+display(todos);
+
+    </script>
+  </body>
 </html>
+
